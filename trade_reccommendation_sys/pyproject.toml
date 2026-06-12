@@ -1,0 +1,108 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "trade-route-ai"
+version = "0.1.0"
+description = "AI-powered maritime trade route recommendation system"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+dependencies = [
+    # Core data stack
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "scipy>=1.13",
+    "pyarrow>=16",
+
+    # Geospatial
+    "shapely>=2.0",
+    "geopandas>=0.14",
+    "h3>=3.7",
+
+    # Graph
+    "networkx>=3.3",
+    "torch>=2.3",
+    "torch-geometric>=2.5",
+
+    # ML / ranking
+    "scikit-learn>=1.5",
+    "lightgbm>=4.3",
+    "xgboost>=2.0",
+
+    # Reinforcement learning
+    "gymnasium>=0.29",
+    "stable-baselines3>=2.3",
+
+    # API
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.2",
+
+    # HTTP clients
+    "httpx>=0.27",
+    "aiohttp>=3.9",
+    "tenacity>=8.3",
+
+    # Utilities
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "loguru>=0.7",
+    "tqdm>=4.66",
+    "rich>=13.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=5.0",
+    "httpx>=0.27",       # for TestClient
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+    "ipykernel>=6.29",
+    "notebook>=7.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+# ── Ruff (linting + formatting) ───────────────────────────────────────────────
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "RUF"]
+ignore = ["E501"]  # line length enforced by formatter
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# ── Mypy ─────────────────────────────────────────────────────────────────────
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
+warn_unused_ignores = true
+
+# ── Pytest ────────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+# ── Coverage ──────────────────────────────────────────────────────────────────
+[tool.coverage.run]
+source = ["src"]
+omit = ["tests/*", "notebooks/*", "scripts/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false

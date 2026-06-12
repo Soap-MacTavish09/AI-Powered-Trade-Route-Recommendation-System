@@ -1,0 +1,77 @@
+# configs/pipeline_config.yaml
+# ETL, scheduling, and data-quality settings.
+
+# ── Data paths ────────────────────────────────────────────────────────────────
+paths:
+  raw_root:       data/raw
+  processed_root: data/processed
+  external_root:  data/external
+  model_registry: models
+
+# ── Source-specific settings ──────────────────────────────────────────────────
+sources:
+  unlocode:
+    url: "https://unece.org/trade/uncefact/unlocode"
+    update_cadence: biannual
+    local_path: data/raw/ports/unlocode
+
+  world_port_index:
+    url: "https://msi.nga.mil/Publications/WPI"
+    update_cadence: periodic
+    local_path: data/raw/ports/wpi
+
+  unctad_plsci:
+    url: "https://unctadstat.unctad.org"
+    update_cadence: quarterly
+    local_path: data/raw/ports/plsci
+
+  world_bank_lpi:
+    url: "https://lpi.worldbank.org"
+    update_cadence: biennial
+    local_path: data/raw/ports/lpi
+
+  marinetraffic_ais:
+    base_url: "https://services.marinetraffic.com/api"
+    history_months: 12
+    local_path: data/raw/ais/marinetraffic
+
+  noaa_weather:
+    base_url: "https://api.weather.gov"
+    update_cadence: hourly
+    local_path: data/raw/weather/noaa
+
+  gdelt:
+    base_url: "https://api.gdeltproject.org"
+    update_cadence: 15min
+    local_path: data/raw/disruptions/gdelt
+
+  comtrade:
+    base_url: "https://comtradeapi.un.org"
+    local_path: data/raw/trade_flows/comtrade
+
+# ── Graph construction ────────────────────────────────────────────────────────
+graph:
+  output_path: data/processed/graphs/maritime_graph.gpickle
+  # Minimum port depth to be included as a node (metres)
+  min_port_depth_m: 5.0
+  # Maximum edge distance to draw between ports (nautical miles)
+  max_edge_distance_nm: 15000
+  include_canals: [suez, panama, malacca, kiel, corinth]
+
+# ── Feature engineering ───────────────────────────────────────────────────────
+features:
+  # Temporal resampling frequency for dynamic features
+  resample_freq: 6H
+  # Spatial buffer (km) for attributing disruption events to route segments
+  disruption_buffer_km: 200
+  # Disruption time buffer (hours) before/after the event
+  disruption_time_buffer_hr: 48
+
+# ── Validation splits ─────────────────────────────────────────────────────────
+# Always time-based — never random — to prevent leakage
+validation:
+  train_end:      "2023-06-30"
+  val_start:      "2023-07-01"
+  val_end:        "2023-12-31"
+  test_start:     "2024-01-01"
+  test_end:       "2024-12-31"

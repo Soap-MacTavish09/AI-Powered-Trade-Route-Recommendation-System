@@ -1,0 +1,112 @@
+# ── Secrets & credentials ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+configs/data_sources.yaml
+**/secrets/
+*.pem
+*.key
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+wheels/
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+.python-version
+
+# ── Testing & coverage ────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+nosetests.xml
+test-results/
+
+# ── Type checking ─────────────────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyright/
+
+# ── Linting / formatting ──────────────────────────────────────────────────────
+.ruff_cache/
+
+# ── Jupyter notebooks ─────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+# Uncomment to strip output before committing:
+# *.ipynb
+
+# ── Data — raw inputs (large, binary, or licensed) ───────────────────────────
+data/raw/
+data/external/
+# Keep processed artefacts if small enough; add to LFS for large ones:
+# data/processed/
+
+# ── Model artefacts & experiments ────────────────────────────────────────────
+models/
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
+*.bin
+mlruns/
+wandb/
+.neptune/
+lightning_logs/
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+logs/
+*.log
+*.log.*
+
+# ── OS artefacts ──────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDEs & editors ────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+deployments/docker/.env
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.tmp
+*.bak
+*.orig
+.hypothesis/

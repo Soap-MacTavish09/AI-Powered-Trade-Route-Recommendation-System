@@ -1,0 +1,58 @@
+# configs/model_config.yaml
+# Hyperparameters and settings for each model tier.
+# Override at runtime with environment variables: MODEL__RANKING__N_ESTIMATORS=800
+
+# ── Candidate generation ──────────────────────────────────────────────────────
+candidate_generation:
+  max_candidates_per_query: 20          # ranked list cap
+  graph_hop_limit: 6                    # max edges traversed per candidate
+  decision_margin: 0.05                 # minimum utility gain to trigger recommendation
+  switching_penalty_usd_default: 5000   # fallback switching cost when not provided
+
+# ── Baseline ranking (LightGBM LTR) ──────────────────────────────────────────
+ranking:
+  model_type: lightgbm                  # lightgbm | xgboost | linear
+  objective: lambdarank
+  metric: ndcg
+  ndcg_eval_at: [1, 3, 5]
+  n_estimators: 500
+  learning_rate: 0.05
+  num_leaves: 63
+  min_child_samples: 20
+  subsample: 0.8
+  colsample_bytree: 0.8
+  random_state: 42
+
+# ── Graph Neural Network ──────────────────────────────────────────────────────
+gnn:
+  model_class: GraphSAGE               # GraphSAGE | GAT | GCN
+  hidden_dim: 128
+  num_layers: 3
+  dropout: 0.2
+  aggregator: mean                     # mean | max | lstm (GraphSAGE)
+  learning_rate: 1.0e-3
+  weight_decay: 1.0e-4
+  epochs: 100
+  batch_size: 256
+  patience: 10                         # early stopping patience
+  random_state: 42
+
+# ── Reinforcement learning policy ─────────────────────────────────────────────
+rl:
+  algorithm: PPO                       # PPO | SAC | DQN
+  policy: MlpPolicy
+  learning_rate: 3.0e-4
+  n_steps: 2048
+  batch_size: 64
+  n_epochs: 10
+  gamma: 0.99
+  total_timesteps: 1_000_000
+  eval_freq: 10_000
+  random_state: 42
+
+# ── Utility function weights (user-adjustable at query time) ──────────────────
+utility_weights:
+  time: 0.40
+  cost: 0.35
+  risk: 0.15
+  emissions: 0.10

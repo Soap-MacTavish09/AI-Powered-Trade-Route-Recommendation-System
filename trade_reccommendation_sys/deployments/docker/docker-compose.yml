@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../../.env
+    volumes:
+      - ../../data:/app/data:ro
+      - ../../models:/app/models:ro
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-trade_route}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-trade_route}
+      POSTGRES_DB: ${POSTGRES_DB:-trade_route_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,0 +1,45 @@
+# Production dependencies — keep in sync with pyproject.toml [project.dependencies]
+# Pin major.minor to prevent surprise breakage; update quarterly.
+
+# Core data stack
+pandas==2.2.*
+numpy==1.26.*
+scipy==1.13.*
+pyarrow==16.*
+
+# Geospatial
+shapely==2.0.*
+geopandas==0.14.*
+h3==3.7.*
+
+# Graph & deep learning
+networkx==3.3.*
+torch==2.3.*
+torch-geometric==2.5.*
+
+# ML / ranking
+scikit-learn==1.5.*
+lightgbm==4.3.*
+xgboost==2.0.*
+
+# Reinforcement learning
+gymnasium==0.29.*
+stable-baselines3==2.3.*
+
+# API
+fastapi==0.111.*
+uvicorn[standard]==0.30.*
+pydantic==2.7.*
+pydantic-settings==2.2.*
+
+# HTTP clients
+httpx==0.27.*
+aiohttp==3.9.*
+tenacity==8.3.*
+
+# Utilities
+python-dotenv==1.0.*
+pyyaml==6.0.*
+loguru==0.7.*
+tqdm==4.66.*
+rich==13.7.*
