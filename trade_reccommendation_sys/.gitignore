@@ -6,7 +6,12 @@ configs/data_sources.yaml
 **/secrets/
 *.pem
 *.key
-trade_route_sys_env/
+../trade_route_sys_env/
+venv/
+.venv/
+env/
+*env/
+
 
 # ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
